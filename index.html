@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Temporal Tides</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@3.6.10/dist/vuetify.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@3.6.10/dist/vuetify.min.js"></script>
+  <script src="app.js" defer></script>
+
+  <!-- This is some styling to be applied to the the entire webppage  -->
+  <!-- Use the font "Poppins" for the entirety of the page -->
+  <style> * { font-family: "Poppins", sans-serif; } </style>
+</head>
+
+<body>
+  <div id="app">
+  <v-app style="background: #BFD0D9;">
+
+      <!-- TOP APPLICATION BAR / THE HEADER -->
+      <v-app-bar elevation="2" color="#263238" height="100">
+      <v-app-bar-title class="text-center font-weight-bold text-h5"> Temporal Tides </v-app-bar-title></v-app-bar>
+    
+      <v-main>
+
+        <!-- This container gives some padding and helps us centre content on our webpage -->
+        <v-container fluid class="py-8 px-6">
+
+          <!-- EXPANSION PANELS (Purpose & How to Play) -->
+          <v-row justify="center">
+          <v-col cols="12" lg="10">
+
+              <!-- THE "PURPOSE OF THE GAME" EXPANSION PANEL -->
+              <v-expansion-panels class="mb-4">
+              <v-expansion-panel>
+
+              <!-- Title area that the user clicks to expand/collapse the expansion panels -->
+              <v-expansion-panel-title color="#758BA2"> <strong>Purpose of Temporal Tides</strong></v-expansion-panel-title>
+
+              <!-- Body text that will be shown when "Purpose of the Game" expansion panel is expanded -->
+              <v-expansion-panel-text  class="text-body-2"><br>Temporal Tides is a card-matching game that explores the relationship between whales and global trade through the lens of time. This module contributes to the broader theme of the webpage, which examines how human economic systems intersect with whale ecosystems. 
+                <br><br>A central idea in this module is that the effects of human activity on whales are not evenly experienced throughout the year. As other modules on this webpage highlight impacts such as whale health effects, this module extends that discussion by showing how these impacts often become more pronounced during particular periods. Certain times of the year bring intensified shipping activity or seasonal trade flows. At the same time, whales move through key phases of their life cycles, including migration and breeding. When these human and ecological timelines overlap, the consequences for whales can become especially significant. The game draws on <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10663124/" target="_blank"> Rupert Griffiths’ concept of “more-than-human temporalities” in the Anthropocene.</a> Human societies tend to organize time through standardized systems such as months, seasons, and economic cycles. Non-human organisms, however, follow ecological rhythms shaped by factors such as migration patterns and food availability.
+                <br><br>To make these different temporal systems visible, Temporal Tides uses the  a familiar framework: months of the year. Each pair of cards represents two case studies that occur during overlapping time periods and geographic locations but belong to different systems. One card reflects human economic activity, such as peak shipping seasons, while the other reflects whale biological activity, such as migration routes. Matching these pairs reveals how the same moment in time can hold very different meanings depending on whether it is viewed through a human economic lens or an ecological one.
+                <br><br>This game is inspired by the familiar memory-matching format, but the pairs are complementary rather than identical. Instead of matching identical images, players match two related events that occur during the same time period. When a card is flipped, a dialog window appears that requires the player to pause and read the information before continuing. This design draws on <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10663124/" target="_blank">Brock’s work in rhetorical code studies</a>, which suggests that digital systems shape how users engage with information. In this case, the game’s interface encourages players to reflect on how human timelines intersect with ecological ones through the lens of temporality.<br><br>
+
+              </v-expansion-panel-text>
+
+            </v-expansion-panel>
+            </v-expansion-panels>
+
+              <!-- THE "HOW TO PLAY" EXPANSION PANEL -->
+              <v-expansion-panels class="mb-6">
+              <v-expansion-panel>
+
+              <v-expansion-panel-title color="#758BA2"><strong>How to Play Temporal Tides</strong></v-expansion-panel-title>
+
+              <v-expansion-panel-text class="text-body-2">      
+                    <br>• The game contains 8 cards (4 pairs) placed face down.
+                    <br>• Click on a card to flip it over and reveal the information on the card.
+                    <br>• Each card represents either human economic activity or whale biological activity.
+                    <br>• A pair connects two related events that occur during the same time period and location, but represent different temporal systems.
+                    <br>• Instead of matching identical cards, you are matching two complementary cases, one showing a human activity and the other showing whale activity.
+                    <br>• When a card is flipped, a dialog window will appear with more information. Read the information before continuing.
+                    <br>• Continue matching cards until all pairs have been found. <br><br>
+                </v-expansion-panel-text>
+
+              </v-expansion-panel>
+              </v-expansion-panels>
+          </v-col>
+          </v-row>
+
+          <!-- This is the GAME BOARD SECTION (aka the card grid + progress panel) -->
+          <v-row justify="center">
+          <v-col cols="12" lg="10">
+
+              <!-- The outer "board" background -->
+              <v-sheet class="pa-12" style="background:#263238" rounded="lg">
+
+              <!-- Align card grid and progress panel to be side by side -->
+              <v-row class="align-stretch">
+
+              <!-- CARD GRID (aka the left side of the game board section) -->
+              <v-col cols="12" md="9">
+              <v-row>
+
+                <!-- v-for will build one card button per card object in cards[] -->
+                <v-col v-for="(card, index) in cards"  :key="index" cols="6" sm="3">
+
+                <!-- Card "button" - Uses cardBtnColour(card) to change colour when flipped/matched andflipCard(card) handles the rules/opens dialog -->
+               <v-btn width="100%" height="240" class="pa-0 overflow-hidden" :color="cardBtnColor(card)" @click="flipCard(card)">
+
+                <!-- THE FACE DOWN STATE - will be shown only when card is not flipped and not matched -->
+                <v-card flat v-if="!card.flipped && !card.matched" class="w-100 h-100 d-flex align-center justify-center" color="transparent">
+                
+                    <!-- The Whale icon shown on all cards when they are face-down -->
+                    <v-img src="images/whale.png" width="80" height="80"></v-img>
+
+                    </v-card>
+                
+              <!-- THE FACE "UP" STATE - which is shown when card.flipped OR card.matched -->
+             <v-card v-else class="w-100 h-100 overflow-hidden" :color="cardBtnColor(card)">
+                <v-card-text class= "py-4 px-2 text-center" style="height: 60px; line-height: 1.2; white-space: normal;"> {{ card.title }}</v-card-text>
+                <v-img :src="card.image" cover height="180px"></v-img>
+              </v-card>
+                  
+          </v-btn>
+
+            <!--  CARD DETAILS DIALOG - this opens when card.showContent = true in app.js -->
+            <!-- v-model connects the dialog to card.showContent - when card.showContent is true the dialog opens and when it's false the dialog closes. -->
+            <!-- v-model updates using handleDialogClose(card), allowing us to detect when the dialog closes so the game can then check the cards -->
+              <v-dialog v-model="card.showContent" width="1500" @update:modelValue="handleDialogClose(card)" persistent>
+
+              <!-- Dialog colour is tied to the pair theme -->
+               <v-card rounded="lg" :color="dialogColor(card)" class="pa-4">
+                  <v-card-text>
+                  <v-row>
+                    
+                  <!-- LEFT SIDE (aka the image side) -->
+                  <v-col cols="12" md="4">
+                    <v-sheet rounded="lg" class="w-100 h-100 pa-3"><v-img :src="card.image" cover height="100%"></v-img></v-sheet>
+                  </v-col>
+
+                  <!-- RIGHT SIDE (aka the text side) -->
+                  <v-col cols="12" md="8">
+
+                  <!-- Card Title for Dialogue pop-up-->
+                  <v-card-title class="text-center font-weight-bold"> {{ card.title }} </v-card-title>
+
+                <!-- "Location" and "Time Range" Information -->
+                <v-list bg-color="transparent">
+                  <v-list-item>
+                  <v-list-item-title><strong>Location:</strong> {{card.location}}</v-list-item-title>
+                  <v-list-item-title><strong>Typical Time Range:</strong> {{card.timeRange}}</v-list-item-title>
+                  </v-list-item>
+                
+                <!-- Description section -->
+                  <v-list-item style="max-height:350px; line-height:1.4; white-space: pre-line;">
+                  <v-list-item-text> {{card.content}} </v-list-item-text>
+                  </v-list-item>
+                </v-list>
+            </v-col>
+            </v-row>
+            </v-card-text>
+
+            <!-- Dialog "CLOSE" button area -->
+              <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <!-- Close triggers closeCard(card) in JS -->
+                <v-btn variant="tonal" color="blue-grey" @click="closeCard(card)"> Close </v-btn></v-card-actions>
+            
+              </v-card>
+            </v-dialog>
+          </v-col>
+        </v-row>
+        </v-col>
+
+        <!--  GAME PROGRESS PANEL (aka the right side of the main game board) -->
+        <v-col cols="12" md="3" class="d-flex">
+
+             <!-- Progress card container -->
+            <v-card class="w-100 d-flex flex-column" color="#FFECB3" elevation="2" rounded="lg">
+                <v-card-title class="text-h6 font-weight-bold text-center py-5"> Game Progress </v-card-title>
+                <v-card-text class="px-6 pb-6 pt-0">
+              
+                <!-- Progress Bar - model-value will be between 0–100 (progress() in JS will return this value) -->
+                <v-progress-linear :model-value="progress()" height="16" rounded class="mb-6"></v-progress-linear>
+
+                <!-- "Pairs found" chip -->
+                <v-chip size="large" background="blue-grey-lighten-3" class="w-100 justify-center mb-4"> Pairs Found: {{pairsFound}} / {{totalPairs}} </v-chip>
+
+                <!-- "Moves" chip -->
+                <v-chip size="large" background="blue-grey-lighten-3" class="w-100 justify-center mb-6"> Moves: {{moves}} </v-chip>
+
+                <!-- Status alert - This is controlled by alertMessage and alertType in app.js -->
+                <v-alert :type="alertType" variant="flat" density="comfortable" class="mb-6"> {{alertMessage}}</v-alert>
+
+                <!-- Reset button calls resetGame() in app.js -->
+                <v-btn height="48" color="#37474F" @click="resetGame"class="w-100"> Reset Game </v-btn>
+
+              </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+          </v-sheet>
+        </v-col>
+        </v-row>
+    </v-container>
+    </v-main>
+
+      <!-- FOOTER -->
+      <v-footer color="#263238" height="80">
+          <v-row class="w-100 justify-center align-center">
+          <v-col cols="12" class="text-center">
+            <v-sheet color="transparent" class="text-body-2 font-weight-medium"> Temporal Tides • ARTSSCI 3C03 • Coding Inquiry </v-sheet>
+            <v-sheet color="transparent" class="text-body-2 font-weight-medium"> Omaimah Abassi • Kareena Hundal • Nimrat Kalirai </v-sheet>
+          </v-col>
+          </v-row>
+      </v-footer>
+
+  </v-app>
+  </div>
+
+</body>
+</html>
