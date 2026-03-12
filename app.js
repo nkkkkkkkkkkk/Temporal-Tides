@@ -33,6 +33,44 @@ const vuetify = createVuetify();
 createApp({
   setup() {
   
+    // This variable is for the navigation bar which will by default be set to false - as it will be closed unless user clicks to open it. 
+    const openDrawer = ref(false);
+    
+    //This function is for when the user click the navigation bar icon, which will then lead to opening the navigation drawer and allow access to the other modules within the webpage. 
+    function toggleDrawer() {
+      openDrawer.value = !openDrawer.value;
+    }
+
+
+// This array contains all the different module titles and their corresponding links within our collective webpage 
+    const modules = ref([
+      { title: "Homepage",
+        url: "https://artssci.github.io/Maritime-Commerce-and-Whale-Risks-Collective-App/index.html" },
+      
+        { title: "Ocean Route Explorer",
+        url: "https://ameliag116.github.io/Ocean-Route-Explorer/"},
+      
+        {title: "Temporal Tides",
+        url: "https://nkkkkkkkkkkk.github.io/Temporal-Tides/ " },
+      
+        { title: "The Anthropocene and Consumer Culture ",
+        url: "https://GROUP3-URL.github.io/module/" },
+      
+        { title: "Ocean Commotion",
+        url: "https://madsb04.github.io/Ocean-Commotion-/"},
+      
+        { title: "Jeopardy: Whale Health",
+        url: "https://roco100.github.io/Jeopardy-Whale-Health/" },
+      
+        { title: "Indigenous Perspectives in Reducing Whale Harm in Shipping Practices",
+        url: "https://genevawhite.github.io/genevacoding/" },
+      
+        { title: "Traditional Ecological Knowledge",
+        url: "https://alipanju12.github.io/Traditional-Ecological-Knowledge-connection-to-Whales/" },
+      
+        {title: "Dive into the world of whales",
+        url: "safiya-fs.github.io/Whale-Anatomy-Module/" },
+    ]);
 
     // "cards" is a reactive array (wrapped in ref) so the UI updates when values change where each card represents one "tile" on the board
     // Pair rules - cards match if their "pairId" is the same
@@ -45,8 +83,10 @@ createApp({
         title: "Port of Savannah Holiday Shipping Peak",
         location: "Port of Savannah, Georgia, USA",
         timeRange: "November - January",
-        content: "The Port of Savannah is one of the busiest container ports in the United States and a major gateway for goods entering the Southeast. In the 2023 fiscal year the port handled over 5.4 million twenty-foot equivalent units (TEUs) of cargo, making it one of the fastest-growing container ports in North America. [1] Shipping activity particularly increases between the months of November and January as retailers import large volumes of goods ahead of the holiday shopping season.\n\nTo keep goods moving efficiently, container ships operate according to tightly coordinated schedules that link ships with trucks and distribution centers. These logistics systems prioritize predictable arrival times and rapid cargo transfer. As a result, vessel traffic increases along major shipping corridors serving East Coast ports, including routes that pass through waters off Georgia and Florida. [2]\n\n1. https://gaports.com/facilities/port-of-savannah/\n2. https://www.bts.gov/content/americas-container-ports",
+        content: "The Port of Savannah is one of the busiest container ports in the United States and a major gateway for goods entering the Southeast. In the 2023 fiscal year the port handled over 5.4 million twenty-foot equivalent units (TEUs) of cargo, making it one of the fastest-growing container ports in North America. [1] Shipping activity particularly increases between the months of November and January as retailers import large volumes of goods ahead of the holiday shopping season.\n\nTo keep goods moving efficiently, container ships operate according to tightly coordinated schedules that link ships with trucks and distribution centers. These logistics systems prioritize predictable arrival times and rapid cargo transfer. As a result, vessel traffic increases along major shipping corridors serving East Coast ports, including routes that pass through waters off Georgia and Florida. [2]",
+        urls: ["https://gaports.com/facilities/port-of-savannah/","https://www.bts.gov/content/americas-container-ports"] , //This is for the sources that will be displayed at the bottom of the cards allowing users to click and access them directly shoudl they want more information that was shared in the content section of the card
         image: "images/portsavannah.jpg",
+        imageSource: "https://thecurrentga.org/2022/02/25/savannah-port-to-add-60-more-capacity/", //This is for the link that will be displayed at the bottom of the cards to the source of where we got the image from should users want to access it. 
         flipped: false,             // this will be "true" when card is currently showing face-up
         matched: false,             // this will be "true" once the pair is correctly matched (stays face-up for the rest of the game)
         showContent: false          // this controls the dialog pop up visibility - starts false because none visible yet!
@@ -56,8 +96,10 @@ createApp({
         title: "North Atlantic Right Whale Calving Season", 
         location: "Coastal waters off Georgia and Florida, USA", 
         timeRange: " Mid-November - Mid-April", 
-        content: "Each winter, North Atlantic right whales migrate from feeding grounds in the North Atlantic to warm coastal waters off Georgia and Florida to give birth. NOAA identifies this region as the species’ primary calving ground, with most births occurring between mid-November and mid-April. The species is critically endangered, with an estimated population of fewer than 360 individuals remaining[1].\n\nNewborn calves measure roughly 4–5 meters in length and depend on their mothers while nursing and developing strength. Mothers and calves often swim slowly and spend extended periods near the ocean surface, behaviors that make them particularly vulnerable to vessel strikes [1]. Ship collisions and fishing gear entanglements are among the leading causes of injury and mortality for the species, because these same coastal waters are used by major shipping routes along the Southeast U.S. coast, whale calving occurs in areas with regular vessel traffic [2].\n\n1. https://www.fisheries.noaa.gov/species/north-atlantic-right-whale\n2. https://www.fisheries.noaa.gov/national/endangered-species-conservation/reducing-vessel-strikes-north-atlantic-right-whales",
+        content: "Each winter, North Atlantic right whales migrate from feeding grounds in the North Atlantic to warm coastal waters off Georgia and Florida to give birth. NOAA identifies this region as the species’ primary calving ground, with most births occurring between mid-November and mid-April. The species is critically endangered, with an estimated population of fewer than 360 individuals remaining[1].\n\nNewborn calves measure roughly 4–5 meters in length and depend on their mothers while nursing and developing strength. Mothers and calves often swim slowly and spend extended periods near the ocean surface, behaviors that make them particularly vulnerable to vessel strikes [1]. Ship collisions and fishing gear entanglements are among the leading causes of injury and mortality for the species, because these same coastal waters are used by major shipping routes along the Southeast U.S. coast, whale calving occurs in areas with regular vessel traffic [2]",
+        urls: ["https://www.fisheries.noaa.gov/species/north-atlantic-right-whale", "https://www.fisheries.noaa.gov/national/endangered-species-conservation/reducing-vessel-strikes-north-atlantic-right-whales"] ,
         image: "images/northatlantic.jpg",
+        imageSource: "https://vocal.media/petlife/six-facts-about-the-north-atlantic-right-whale",
         flipped: false, 
         matched: false, 
         showContent: false },
@@ -68,8 +110,10 @@ createApp({
         title: "Humpback Whale Mating Season", 
         location: "The ocean around Ogasawara islands, Okinawa and the Philippines", 
         timeRange: "December - March ", 
-        content: "The humpback whale breeding season occurs from December to March in the Northern Hemisphere. After the breeding season, the pregnant female will migrate to feeding grounds to gain strength for a successful birth before migrating back to the breeding grounds to give birth after a gestation of 11.5 months. Male humpback whales often make long and complex “songs” to compete for female attention during the breeding season. [1] \n\nThe breeding ground for humpback whales in the Philippines is located in the waters around the Babuyan Islands in the Babuyan Marine Corridor. The whales around the Babuyan Islands are part of the Western North Pacific Distinct Population segment, which is one of four humpback whale population segments that are still listed as endangered. The statistics indicate that there is a small population of humpback whales using this breeding ground with a high rate of return. [2]\n\n 1.https://wwhandbook.iwc.int/en/species/humpback-whale#:~:text=Reproduction,of%20approximately%2011.5%20months3.\n2. https://www.marinemammalhabitat.org/factsheets/babuyan-marine-corridor/", 
-        image: "images/humpbackwhale.png", 
+        content: "The humpback whale breeding season occurs from December to March in the Northern Hemisphere. After the breeding season, the pregnant female will migrate to feeding grounds to gain strength for a successful birth before migrating back to the breeding grounds to give birth after a gestation of 11.5 months. Male humpback whales often make long and complex “songs” to compete for female attention during the breeding season. [1] \n\nThe breeding ground for humpback whales in the Philippines is located in the waters around the Babuyan Islands in the Babuyan Marine Corridor. The whales around the Babuyan Islands are part of the Western North Pacific Distinct Population segment, which is one of four humpback whale population segments that are still listed as endangered. The statistics indicate that there is a small population of humpback whales using this breeding ground with a high rate of return. [2]", 
+        urls: ["https://wwhandbook.iwc.int/en/species/humpback-whale#:~:text=Reproduction,of%20approximately%2011.5%20months3.","https://www.marinemammalhabitat.org/factsheets/babuyan-marine-corridor/"] ,
+        image: "images/humpbackwhale.png",
+        imageSource: "https://en.wikipedia.org/wiki/Humpback_whale", 
         flipped: false, 
         matched: false, 
         showContent: false },
@@ -79,8 +123,10 @@ createApp({
         title: "Luzon Strait Maritime Shipping", 
         location: "Luzon Strait, near the Babuyan Islands ", 
         timeRange: "Year-round", 
-        content: "The Luzon Strait extends for over 200 miles between the islands of northern Taiwan and Luzon, Philippines. This strait is very important as it connects the South China Sea with the Philippine Sea. The strait contains a series of channels, with the main channels including the Bashi (North), Balintang (central) and Babuyan (South) channels. [1]\n\nThe Luzon Strait is a major shipping lane connecting East Asia to the Western Pacific. This strait is both wide enough to fit larger ships and one of the quickest routes between South-East Asia and the rest of the world. The sound from these ships affects the mating process of humpback whales in the Babuyan Marine Corridor, as they mute the male humpback whale songs. While the purpose of humpback whale songs is unknown, males tend to exhibit this behaviour during the mating season. [2]\n\n1. https://www.britannica.com/place/Luzon-Strait\n2. https://www.pbs.org/wgbh/nova/article/ships-noises-humpback-whale-song/", 
+        content: "The Luzon Strait extends for over 200 miles between the islands of northern Taiwan and Luzon, Philippines. This strait is very important as it connects the South China Sea with the Philippine Sea. The strait contains a series of channels, with the main channels including the Bashi (North), Balintang (central) and Babuyan (South) channels. [1]\n\nThe Luzon Strait is a major shipping lane connecting East Asia to the Western Pacific. This strait is both wide enough to fit larger ships and one of the quickest routes between South-East Asia and the rest of the world. The sound from these ships affects the mating process of humpback whales in the Babuyan Marine Corridor, as they mute the male humpback whale songs. While the purpose of humpback whale songs is unknown, males tend to exhibit this behaviour during the mating season. [2]", 
+        urls: ["https://www.britannica.com/place/Luzon-Strait","https://www.pbs.org/wgbh/nova/article/ships-noises-humpback-whale-song/"],
         image: "images/luzonstrait.png", 
+        imageSource: "https://www.vesselfinder.com/vessels/details/9317793", 
         flipped: false, 
         matched: false, 
         showContent: false },
@@ -91,8 +137,10 @@ createApp({
         title: "Santa Barbara Shipping Corridor", 
         location: "Santa Barbara Channel, California, USA", 
         timeRange: "Year-round (heavy traffic throughout the year)", 
-        content: "The Santa Barbara Channel is a narrow marine passage between the California mainland and the Channel Islands National Park that is an important transit route for vessels traveling along the U.S. West Coast. Ships have to pass through this corridor to move between the Port of Los Angeles and Port of Long Beach, to participate in the trans-Pacific container trade, which facilitates over $470 billion of trade annually. [1] \n\nLarge container ships traveling through these lanes commonly move at speeds above 10 knots, the range at which the risk and severity of whale collisions increases by nearly 50%. [1][2] Research using vessel-tracking data has shown that this region sees some of the highest densities of commercial vessel traffic along the U.S. West Coast. [1] Because the shipping lanes run directly across the channel rather than farther offshore, vessels repeatedly pass through the same waters that support seasonal whale feeding activity.\n\n1. https://doi-org.libaccess.lib.mcmaster.ca/10.1016/j.ocecoaman.2017.07.013\n2.https://bluewhalesblueskies.org/impact/reducing-ship-strikes/#facts", 
+        content: "The Santa Barbara Channel is a narrow marine passage between the California mainland and the Channel Islands National Park that is an important transit route for vessels traveling along the U.S. West Coast. Ships have to pass through this corridor to move between the Port of Los Angeles and Port of Long Beach, to participate in the trans-Pacific container trade, which facilitates over $470 billion of trade annually. [1] \n\nLarge container ships traveling through these lanes commonly move at speeds above 10 knots, the range at which the risk and severity of whale collisions increases by nearly 50%. [1][2] Research using vessel-tracking data has shown that this region sees some of the highest densities of commercial vessel traffic along the U.S. West Coast. [1] Because the shipping lanes run directly across the channel rather than farther offshore, vessels repeatedly pass through the same waters that support seasonal whale feeding activity.", 
+        urls: ["https://doi-org.libaccess.lib.mcmaster.ca/10.1016/j.ocecoaman.2017.07.013","https://bluewhalesblueskies.org/impact/reducing-ship-strikes/#facts"],
         image: "images/santabarbara.png", 
+        imageSource: "https://www.vesselfinder.com/vessels/details/9430399",
         flipped: false, 
         matched: false, 
         showContent: false },
@@ -102,8 +150,10 @@ createApp({
         title: "Blue Whale Feeding Season", 
         location: "Santa Barbara Channel, California, USA", 
         timeRange: "May – October", 
-        content: "During the late spring and summer months, the waters of the Santa Barbara Channel become an important feeding area for the Blue Whale. Seasonal wind-driven upwelling along the California coast brings nutrient-rich water to the surface, producing dense concentrations of krill. This attracts blue whales migrating along the eastern Pacific coast, and the channel regularly hosts feeding groups during the May–October period. [1]\n\nBlue whales forage using repeated lunge-feeding dives in which they accelerate upward through krill swarms near the surface. This behavior places them directly within the depth range of passing ships. Because both ships and whales concentrate in the same waters during the feeding season, the Santa Barbara Channel has been identified as a significant collision-risk area for blue whales along the U.S. West Coast, with an estimated 80 whales killed off the US Coast a year. [2]\n\n1.https://conbio-onlinelibrary-wiley-com.libaccess.lib.mcmaster.ca/doi/full/10.1111/cobi.12029\n2.https://bluewhalesblueskies.org/impact/reducing-ship-strikes/#facts", 
+        content: "During the late spring and summer months, the waters of the Santa Barbara Channel become an important feeding area for the Blue Whale. Seasonal wind-driven upwelling along the California coast brings nutrient-rich water to the surface, producing dense concentrations of krill. This attracts blue whales migrating along the eastern Pacific coast, and the channel regularly hosts feeding groups during the May–October period. [1]\n\nBlue whales forage using repeated lunge-feeding dives in which they accelerate upward through krill swarms near the surface. This behavior places them directly within the depth range of passing ships. Because both ships and whales concentrate in the same waters during the feeding season, the Santa Barbara Channel has been identified as a significant collision-risk area for blue whales along the U.S. West Coast, with an estimated 80 whales killed off the US Coast a year. [2]", 
+        urls: ["https://conbio-onlinelibrary-wiley-com.libaccess.lib.mcmaster.ca/doi/full/10.1111/cobi.12029", "https://bluewhalesblueskies.org/impact/reducing-ship-strikes/#facts"],
         image: "images/bluewhale.png", 
+        imageSource: "https://environment.co/how-big-is-a-blue-whale/",
         flipped: false, 
         matched: false, 
         showContent: false },
@@ -114,8 +164,10 @@ createApp({
         title: "Mediterranean Shipping Traffic", 
         location: "Ligurian Sea (North-Western Mediterranean)", 
         timeRange: "Year-round commercial traffic", 
-        content: "The Ligurian Sea, located between the coasts of France, Italy, and Monaco, sits along one of the principal shipping corridors of the north-western Mediterranean. Cargo vessels, ferries, and tankers regularly move through this region while connecting major ports such as Genoa, Marseille, and Barcelona. These routes form part of the wider maritime network linking the Mediterranean with the Atlantic Ocean through the Strait of Gibraltar. [1]\n\nShipping density in the area is particularly significant because these routes cross the Pelagos Sanctuary, a marine protected area created by France, Italy, and Monaco to protect cetaceans. Despite its protected status, the sanctuary remains heavily affected by maritime traffic due to the concentration of commercial ports and shipping lanes along its coasts. Researchers mapping vessel traffic in the sanctuary have identified persistent collision-risk zones where major shipping routes intersect with areas of high cetacean occurrence. [1] \n\n1.https://www-sciencedirect-com.libaccess.lib.mcmaster.ca/science/article/pii/S0964569121003033", 
+        content: "The Ligurian Sea, located between the coasts of France, Italy, and Monaco, sits along one of the principal shipping corridors of the north-western Mediterranean. Cargo vessels, ferries, and tankers regularly move through this region while connecting major ports such as Genoa, Marseille, and Barcelona. These routes form part of the wider maritime network linking the Mediterranean with the Atlantic Ocean through the Strait of Gibraltar. [1]\n\nShipping density in the area is particularly significant because these routes cross the Pelagos Sanctuary, a marine protected area created by France, Italy, and Monaco to protect cetaceans. Despite its protected status, the sanctuary remains heavily affected by maritime traffic due to the concentration of commercial ports and shipping lanes along its coasts. Researchers mapping vessel traffic in the sanctuary have identified persistent collision-risk zones where major shipping routes intersect with areas of high cetacean occurrence. [1]", 
+        urls: ["https://www-sciencedirect-com.libaccess.lib.mcmaster.ca/science/article/pii/S0964569121003033"],
         image: "images/mediterranean.png", 
+        imageSource: "https://www.researchgate.net/figure/Marine-Traffic-in-the-Eastern-Mediterranean-Sea-21-Existing-Navigational-Aids-in-the_fig1_304004673",
         flipped: false, 
         matched: false, 
         showContent: false },
@@ -125,8 +177,10 @@ createApp({
         title: "Fin Whale Feeding Habitat in Pelagos", 
         location: "Pelagos Sanctuary and Ligurian Sea, Mediterranean", 
         timeRange: "July - September (peak seasonal presence)", 
-        content: "The Fin Whale is the largest whale species regularly found in the Mediterranean Sea and occurs seasonally in the Ligurian Sea, where it feeds on dense aggregations of northern krill. Seasonal oceanographic fronts concentrate krill in this region during the summer months, drawing feeding whales into the same waters that host heavy maritime traffic. [1]\n\nShip strikes are considered the largest human-caused threat to Mediterranean fin whales, and collision records show that a large proportion of fatal incidents occur in or near the Pelagos Sanctuary. [2] A review of ship-strike data found that 82% of documented fatal collisions between 1972 and 2001 occurred in the Ligurian Sea region, highlighting the intensity of overlap between whale feeding habitat and shipping traffic. [1]\n\nRecent conservation assessments note that this area remains a major collision hotspot, where high-speed vessels crossing the sanctuary intersect with critical whale habitat. [2]\n\n1.https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2022.867287\n2.https://pelagos-sanctuary.org/threats", 
+        content: "The Fin Whale is the largest whale species regularly found in the Mediterranean Sea and occurs seasonally in the Ligurian Sea, where it feeds on dense aggregations of northern krill. Seasonal oceanographic fronts concentrate krill in this region during the summer months, drawing feeding whales into the same waters that host heavy maritime traffic. [1]\n\nShip strikes are considered the largest human-caused threat to Mediterranean fin whales, and collision records show that a large proportion of fatal incidents occur in or near the Pelagos Sanctuary. [2] A review of ship-strike data found that 82% of documented fatal collisions between 1972 and 2001 occurred in the Ligurian Sea region, highlighting the intensity of overlap between whale feeding habitat and shipping traffic. [1]\n\nRecent conservation assessments note that this area remains a major collision hotspot, where high-speed vessels crossing the sanctuary intersect with critical whale habitat. [2]", 
+        urls: ["https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2022.867287","https://pelagos-sanctuary.org/threats"],
         image: "images/finwhale.png", 
+        imageSource: "https://www.dolphinsafari.com/9-things-that-are-amazing-about-fin-whales/",
         flipped: false, 
         matched: false, 
         showContent: false }, ]);
@@ -344,6 +398,9 @@ createApp({
       flipCard,
       closeCard,
       resetGame,
+      openDrawer, 
+      toggleDrawer,
+      modules, 
     }; }, })
   
   .use(vuetify)
